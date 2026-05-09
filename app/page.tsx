@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { cache } from "react";
 import { Button } from "@/components/ui/button";
@@ -64,14 +63,14 @@ export default async function Home() {
       {image ? (
         <>
           <div className="fixed inset-0 z-0">
-            <Image
+            {/* Strapi 外链：原生 img 避免 EdgeOne 上 next/image 远程域名与优化链路异常 */}
+            <img
               src={image.src}
               alt={image.alt}
-              fill
-              priority
-              unoptimized
-              className="object-cover"
-              sizes="100vw"
+              width={image.width}
+              height={image.height}
+              fetchPriority="high"
+              className="h-full w-full object-cover"
             />
           </div>
           <div

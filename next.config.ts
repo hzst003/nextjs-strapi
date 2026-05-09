@@ -13,7 +13,10 @@ function strapiUploadRemotePatterns(): UploadRemotePattern[] {
       pathname: "/uploads/**",
     },
   ];
-  const raw = process.env.STRAPI_URL;
+  const raw =
+    process.env.STRAPI_PUBLIC_URL ||
+    process.env.NEXT_PUBLIC_STRAPI_URL ||
+    process.env.STRAPI_URL;
   if (!raw) return patterns;
   try {
     const u = new URL(raw);
@@ -32,7 +35,9 @@ function strapiUploadRemotePatterns(): UploadRemotePattern[] {
 }
 
 const nextConfig: NextConfig = {
+  // EdgeOne Pages 静态导出（output: 'export'）要求关闭默认优化；SSR 场景下也可避免依赖 /_next/image 在边缘节点的兼容性
   images: {
+    unoptimized: true,
     remotePatterns: strapiUploadRemotePatterns(),
   },
 };
