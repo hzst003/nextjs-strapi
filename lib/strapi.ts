@@ -9,8 +9,23 @@ export function getStrapiURL(): string {
 /** 将 Strapi 返回的相对媒体路径转为绝对 URL（用于 Next/Image 的 src） */
 export function strapiMediaUrl(path: string | null | undefined): string | null {
   if (!path) return null;
-  if (path.startsWith("http://") || path.startsWith("https://")) return path;
   const base = getStrapiURL();
+
+  // Strapi 常把媒体存成「完整 URL」，其 host 可能是后台里的 localhost/内网，与线上 STRAPI_URL 不一致；应用当前 STRAPI_URL 重拼，避免用户浏览器请求到错误地址。
+  if (path.startsWith("http://") || path.startsWith("https://")) {
+    if (!base) return path;
+    try {
+      const u = new URL(path);
+      if (u.pathname.includes("/uploads/")) {
+        const pathWithQuery = `${u.pathname}${u.search}`;
+        return `${base}${pathWithQuery.startsWith("/") ? pathWithQuery : `/${pathWithQuery}`}`;
+      }
+    } catch {
+      return null;
+    }
+    return path;
+  }
+
   if (!base) return null;
   const p = path.startsWith("/") ? path : `/${path}`;
   return `${base}${p}`;
