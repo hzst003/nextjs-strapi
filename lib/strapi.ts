@@ -94,6 +94,108 @@ export function strapiHomeApiQuery(): string {
   return `api/home?${qs.toString()}`;
 }
 
+/**
+ * 网址导航集合类型 `link-pages`：取最新发布的一条；正文分组在字段 `jsoncontent`（JSON）
+ * 或与单类型一致的 `sections` 组件列表。
+ * Public 角色需对 `link-pages` 开放 `find`。
+ */
+export function strapiLinkPagesApiQuery(): string {
+  const qs = new URLSearchParams();
+  qs.set("pagination[pageSize]", "1");
+  qs.set("sort", "publishedAt:desc");
+  return `api/link-pages?${qs.toString()}`;
+}
+
+export type LinkPageNavLink = {
+  title: string;
+  url: string;
+  description?: string;
+};
+
+export type LinkPageNavSection = {
+  title: string;
+  links: LinkPageNavLink[];
+};
+
+/** Strapi 导航页解析后的展示模型 */
+export type LinkPageContent = {
+  subtitle: string;
+  heading: string;
+  lead: string;
+  sections: LinkPageNavSection[];
+};
+
+function readStrapiDocFields(raw: unknown): Record<string, unknown> | null {
+  if (!raw || typeof raw !== "object") return null;
+  const o = raw as Record<string, unknown>;
+  const attrs = o.attributes;
+  if (attrs && typeof attrs === "object") {
+    return attrs as Record<string, unknown>;
+  }
+  return o;
+}
+
+function parseNavSectionsFromUnknown(
+  sectionsRaw: unknown
+): LinkPageNavSection[] {
+  const sections: LinkPageNavSection[] = [];
+  if (!Array.isArray(sectionsRaw)) return sections;
+  for (const item of sectionsRaw) {
+    const s = readStrapiDocFields(item);
+    if (!s) continue;
+    const title = typeof s.title === "string" ? s.title.trim() : "";
+    const linksRaw = s.links;
+    const links: LinkPageNavLink[] = [];
+    if (Array.isArray(linksRaw)) {
+      for (const L of linksRaw) {
+        const lo = readStrapiDocFields(L);
+        if (!lo) continue;
+        const lt = typeof lo.title === "string" ? lo.title.trim() : "";
+        const url = typeof lo.url === "string" ? lo.url.trim() : "";
+        if (!lt || !url) continue;
+        const desc =
+          typeof lo.description === "string" ? lo.description.trim() : "";
+        links.push({
+          title: lt,
+          url,
+          ...(desc ? { description: desc } : {}),
+        });
+      }
+    }
+    if (title && links.length > 0) sections.push({ title, links });
+  }
+  return sections;
+}
+
+/**
+ * 解析导航接口响应：
+ * - 集合 `GET /api/link-pages`：`data` 为数组，取第一条；分组字段多为 `jsoncontent`
+ * - 单条 `GET /api/link-page`：`data` 为对象；分组多为 `sections`
+ */
+export function parseLinkPagePayload(payload: unknown): LinkPageContent | null {
+  if (!payload || typeof payload !== "object") return null;
+  const data = (payload as { data?: unknown }).data;
+
+  let d: Record<string, unknown> | null = null;
+  if (Array.isArray(data)) {
+    if (data.length === 0) return null;
+    d = readStrapiDocFields(data[0]);
+  } else {
+    d = readStrapiDocFields(data);
+  }
+  if (!d) return null;
+
+  const subtitle = typeof d.subtitle === "string" ? d.subtitle : "";
+  const heading = typeof d.heading === "string" ? d.heading : "";
+  const lead = typeof d.lead === "string" ? d.lead : "";
+
+  const sectionsRaw = d.jsoncontent ?? d.sections;
+  const sections = parseNavSectionsFromUnknown(sectionsRaw);
+
+  if (sections.length === 0) return null;
+  return { subtitle, heading, lead, sections };
+}
+
 /** 解析 Strapi 媒体 JSON：扁平对象，或 `{ data }` / `attributes`，含 formats 兜底 */
 function pickStrapiMediaRecord(raw: unknown): {
   url: string;
