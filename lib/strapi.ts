@@ -197,7 +197,7 @@ export function parseLinkPagePayload(payload: unknown): LinkPageContent | null {
 }
 
 /** 解析 Strapi 媒体 JSON：扁平对象，或 `{ data }` / `attributes`，含 formats 兜底 */
-function pickStrapiMediaRecord(raw: unknown): {
+export function pickStrapiMediaRecord(raw: unknown): {
   url: string;
   width?: number;
   height?: number;

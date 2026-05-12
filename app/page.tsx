@@ -36,7 +36,7 @@ export default async function Home() {
 
   if (!content) {
     return (
-      <main className="flex flex-1 flex-col items-center justify-center bg-background px-6 py-24">
+      <main className="flex min-h-0 flex-1 flex-col items-center justify-center bg-background px-6 py-24">
         <div className="max-w-md text-center">
           <h1 className="text-lg font-semibold tracking-tight text-foreground">
             暂时无法加载页面内容
@@ -87,7 +87,7 @@ export default async function Home() {
 
       <main
         className={cn(
-          "relative z-10 flex min-h-[100dvh] w-full flex-1 flex-col px-6 pb-10 pt-16 md:px-10 md:pb-14 md:pt-20",
+          "relative z-10 flex min-h-0 w-full flex-1 flex-col px-6 pb-10 pt-16 md:px-10 md:pb-14 md:pt-20",
         )}
       >
         <div className="flex flex-1 flex-col justify-end md:justify-center">

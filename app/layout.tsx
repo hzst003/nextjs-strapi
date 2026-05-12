@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
+
+import { SiteNav } from "@/components/site-nav";
+
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,7 +21,10 @@ export default function RootLayout({
       lang="en"
       className={`${GeistSans.variable} ${GeistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="flex min-h-dvh flex-col">
+        <SiteNav />
+        <div className="flex min-h-0 flex-1 flex-col">{children}</div>
+      </body>
     </html>
   );
 }
