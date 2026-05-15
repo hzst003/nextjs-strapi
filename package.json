@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "random-logos": "node scripts/random-logos.mjs",
+    "random-images": "node scripts/download-random-images.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -14,6 +16,7 @@
     "geist": "^1.7.0",
     "lucide-react": "^1.14.0",
     "next": "16.2.6",
+    "next-themes": "^0.4.6",
     "radix-ui": "^1.4.3",
     "react": "19.2.4",
     "react-dom": "19.2.4",
@@ -28,6 +31,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
+    "simple-icons": "^11.15.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

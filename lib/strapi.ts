@@ -106,6 +106,18 @@ export function strapiLinkPagesApiQuery(): string {
   return `api/link-pages?${qs.toString()}`;
 }
 
+/**
+ * 单类型 `GET /api/global`：未 populate 时 `topnav` 等关联往往只有 `id`，需嵌套 populate 才能拿到组件字段。
+ * `logolink` 内的媒体需再套一层 populate，否则没有 `image.url`。
+ */
+export function strapiGlobalApiQuery(): string {
+  const qs = new URLSearchParams();
+  qs.set("populate[topnav][populate][logolink][populate]", "*");
+  qs.set("populate[topnav][populate][link]", "true");
+  qs.set("populate[topnav][populate][cta]", "true");
+  return `api/global?${qs.toString()}`;
+}
+
 export type LinkPageNavLink = {
   title: string;
   url: string;
@@ -194,6 +206,143 @@ export function parseLinkPagePayload(payload: unknown): LinkPageContent | null {
 
   if (sections.length === 0) return null;
   return { subtitle, heading, lead, sections };
+}
+
+export type GlobalPageLogoLink = {
+  text: string;
+  href: string;
+  /** 经 {@link strapiMediaUrl} 处理后的可展示地址 */
+  imageSrc: string | null;
+  imageAlt: string | null;
+  imageWidth?: number;
+  imageHeight?: number;
+};
+
+export type GlobalPageNavLink = {
+  text: string;
+  url: string;
+  isExternal: boolean;
+};
+
+export type GlobalPageTopNav = {
+  logo: GlobalPageLogoLink | null;
+  links: GlobalPageNavLink[];
+  cta: { text: string; url: string; isExternal: boolean } | null;
+};
+
+/** 解析后的 global 单类型（含顶栏导航） */
+export type GlobalPageContent = {
+  title: string;
+  description: string;
+  publishedAt: string | null;
+  topnav: GlobalPageTopNav | null;
+};
+
+/** Strapi 5 可重复组件 `topnav` 常为数组；取首块再交给 {@link parseGlobalTopNav}。 */
+function unwrapGlobalTopnavBlock(raw: unknown): unknown {
+  if (Array.isArray(raw)) {
+    if (raw.length === 0) return null;
+    return raw[0];
+  }
+  return raw;
+}
+
+function parseGlobalTopNav(raw: unknown): GlobalPageTopNav | null {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return null;
+  const t = readStrapiDocFields(raw);
+  if (!t) return null;
+
+  let logo: GlobalPageLogoLink | null = null;
+  const llRaw = t.logolink;
+  if (llRaw && typeof llRaw === "object") {
+    const ll = readStrapiDocFields(llRaw);
+    if (ll) {
+      const text = typeof ll.text === "string" ? ll.text.trim() : "";
+      const href = typeof ll.href === "string" ? ll.href.trim() : "";
+      let imageSrc: string | null = null;
+      let imageAlt: string | null = null;
+      let imageWidth: number | undefined;
+      let imageHeight: number | undefined;
+      const media = pickStrapiMediaRecord(ll.image);
+      if (media?.url) {
+        imageSrc = strapiMediaUrl(media.url);
+        imageAlt =
+          typeof media.alternativeText === "string" && media.alternativeText
+            ? media.alternativeText
+            : text || null;
+        imageWidth = media.width;
+        imageHeight = media.height;
+      }
+      if (text || href || imageSrc) {
+        logo = {
+          text,
+          href,
+          imageSrc,
+          imageAlt,
+          ...(typeof imageWidth === "number" ? { imageWidth } : {}),
+          ...(typeof imageHeight === "number" ? { imageHeight } : {}),
+        };
+      }
+    }
+  }
+
+  const links: GlobalPageNavLink[] = [];
+  const linkArr = t.link;
+  if (Array.isArray(linkArr)) {
+    for (const item of linkArr) {
+      if (!item || typeof item !== "object") continue;
+      const o = readStrapiDocFields(item);
+      if (!o) continue;
+      const text = typeof o.text === "string" ? o.text.trim() : "";
+      const url = typeof o.url === "string" ? o.url.trim() : "";
+      if (!text && !url) continue;
+      links.push({
+        text: text || url,
+        url: url || "#",
+        isExternal: o.isExternal === true,
+      });
+    }
+  }
+
+  let cta: GlobalPageTopNav["cta"] = null;
+  const ctaRaw = t.cta;
+  if (ctaRaw && typeof ctaRaw === "object") {
+    const c = readStrapiDocFields(ctaRaw);
+    if (c) {
+      const text = typeof c.text === "string" ? c.text.trim() : "";
+      const url = typeof c.url === "string" ? c.url.trim() : "";
+      if (text || url) {
+        cta = {
+          text: text || url,
+          url: url || "#",
+          isExternal: c.isExternal === true,
+        };
+      }
+    }
+  }
+
+  if (!logo && links.length === 0 && !cta) return null;
+  return { logo, links, cta };
+}
+
+export function parseGlobalPayload(payload: unknown): GlobalPageContent | null {
+  if (!payload || typeof payload !== "object") return null;
+  const data = (payload as { data?: unknown }).data;
+  if (data === null || data === undefined) return null;
+  const d = readStrapiDocFields(data);
+  if (!d) return null;
+
+  const title = typeof d.title === "string" ? d.title : "";
+  const description = typeof d.description === "string" ? d.description : "";
+  const publishedAt =
+    typeof d.publishedAt === "string" ? d.publishedAt : null;
+
+  return {
+    title,
+    description,
+    publishedAt,
+    topnav: parseGlobalTopNav(unwrapGlobalTopnavBlock(d.topnav)),
+  };
 }
 
 /** 解析 Strapi 媒体 JSON：扁平对象，或 `{ data }` / `attributes`，含 formats 兜底 */

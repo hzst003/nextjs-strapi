@@ -1,0 +1,72 @@
+[
+  {
+    "slug": "vivaldi",
+    "title": "Vivaldi",
+    "description": "Simple Icons 随机条目",
+    "href": "https://vivaldi.com/press",
+    "logoSrc": "/logos/random/vivaldi.svg"
+  },
+  {
+    "slug": "nokia",
+    "title": "Nokia",
+    "description": "Simple Icons 随机条目",
+    "href": "https://www.nokia.com",
+    "logoSrc": "/logos/random/nokia.svg"
+  },
+  {
+    "slug": "macys",
+    "title": "Macy's",
+    "description": "Simple Icons 随机条目",
+    "href": "https://www.macysinc.com/news-media/media-assets",
+    "logoSrc": "/logos/random/macys.svg"
+  },
+  {
+    "slug": "nbc",
+    "title": "NBC",
+    "description": "Simple Icons 随机条目",
+    "href": "https://www.nbcnews.com",
+    "logoSrc": "/logos/random/nbc.svg"
+  },
+  {
+    "slug": "zingat",
+    "title": "Zingat",
+    "description": "Simple Icons 随机条目",
+    "href": "https://www.zingat.com",
+    "logoSrc": "/logos/random/zingat.svg"
+  },
+  {
+    "slug": "xampp",
+    "title": "XAMPP",
+    "description": "Simple Icons 随机条目",
+    "href": "https://www.apachefriends.org/en/",
+    "logoSrc": "/logos/random/xampp.svg"
+  },
+  {
+    "slug": "saopaulometro",
+    "title": "São Paulo Metro",
+    "description": "Simple Icons 随机条目",
+    "href": "https://commons.wikimedia.org/wiki/File:Sao_Paulo_Metro_Logo.svg",
+    "logoSrc": "/logos/random/saopaulometro.svg"
+  },
+  {
+    "slug": "snowflake",
+    "title": "Snowflake",
+    "description": "Simple Icons 随机条目",
+    "href": "https://www.snowflake.com/brand-guidelines/",
+    "logoSrc": "/logos/random/snowflake.svg"
+  },
+  {
+    "slug": "blueprint",
+    "title": "Blueprint",
+    "description": "Simple Icons 随机条目",
+    "href": "https://blueprintjs.com/docs",
+    "logoSrc": "/logos/random/blueprint.svg"
+  },
+  {
+    "slug": "hey",
+    "title": "HEY",
+    "description": "Simple Icons 随机条目",
+    "href": "https://hey.com",
+    "logoSrc": "/logos/random/hey.svg"
+  }
+]
