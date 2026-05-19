@@ -1,72 +1,142 @@
 [
   {
-    "slug": "vivaldi",
-    "title": "Vivaldi",
+    "slug": "tradingview",
+    "title": "TradingView",
     "description": "Simple Icons 随机条目",
-    "href": "https://vivaldi.com/press",
-    "logoSrc": "/logos/random/vivaldi.svg"
+    "href": "https://www.tradingview.com/media-kit",
+    "logoSrc": "/logos/random/tradingview.svg"
   },
   {
-    "slug": "nokia",
-    "title": "Nokia",
+    "slug": "keepassxc",
+    "title": "KeePassXC",
     "description": "Simple Icons 随机条目",
-    "href": "https://www.nokia.com",
-    "logoSrc": "/logos/random/nokia.svg"
+    "href": "https://github.com/keepassxreboot/keepassxc/tree/3fdafc6d25e85050976e0cc645db579086db3f45",
+    "logoSrc": "/logos/random/keepassxc.svg"
   },
   {
-    "slug": "macys",
-    "title": "Macy's",
+    "slug": "homeassistant",
+    "title": "Home Assistant",
     "description": "Simple Icons 随机条目",
-    "href": "https://www.macysinc.com/news-media/media-assets",
-    "logoSrc": "/logos/random/macys.svg"
+    "href": "https://github.com/home-assistant/assets/blob/0f69676da79c3881e7dfca6d6c0a5739f88273d8/logo/home-assistant-logo.zip",
+    "logoSrc": "/logos/random/homeassistant.svg"
   },
   {
-    "slug": "nbc",
-    "title": "NBC",
+    "slug": "milvus",
+    "title": "Milvus",
     "description": "Simple Icons 随机条目",
-    "href": "https://www.nbcnews.com",
-    "logoSrc": "/logos/random/nbc.svg"
+    "href": "https://github.com/milvus-io/artwork/blob/e30bffa2b0632b0d4cefcdd4e1a2c09fee5b0d28/icon/black/milvus-icon-black.svg",
+    "logoSrc": "/logos/random/milvus.svg"
   },
   {
-    "slug": "zingat",
-    "title": "Zingat",
+    "slug": "googlecampaignmanager360",
+    "title": "Google Campaign Manager 360",
     "description": "Simple Icons 随机条目",
-    "href": "https://www.zingat.com",
-    "logoSrc": "/logos/random/zingat.svg"
+    "href": "https://developers.google.com/doubleclick-advertisers",
+    "logoSrc": "/logos/random/googlecampaignmanager360.svg"
   },
   {
-    "slug": "xampp",
-    "title": "XAMPP",
+    "slug": "kubernetes",
+    "title": "Kubernetes",
     "description": "Simple Icons 随机条目",
-    "href": "https://www.apachefriends.org/en/",
-    "logoSrc": "/logos/random/xampp.svg"
+    "href": "https://github.com/kubernetes/kubernetes/tree/cac53883f4714452f3084a22e4be20d042a9df33/logo",
+    "logoSrc": "/logos/random/kubernetes.svg"
   },
   {
-    "slug": "saopaulometro",
-    "title": "São Paulo Metro",
+    "slug": "mubi",
+    "title": "MUBI",
     "description": "Simple Icons 随机条目",
-    "href": "https://commons.wikimedia.org/wiki/File:Sao_Paulo_Metro_Logo.svg",
-    "logoSrc": "/logos/random/saopaulometro.svg"
+    "href": "https://mubi.com",
+    "logoSrc": "/logos/random/mubi.svg"
   },
   {
-    "slug": "snowflake",
-    "title": "Snowflake",
+    "slug": "hootsuite",
+    "title": "Hootsuite",
     "description": "Simple Icons 随机条目",
-    "href": "https://www.snowflake.com/brand-guidelines/",
-    "logoSrc": "/logos/random/snowflake.svg"
+    "href": "https://hootsuite.widencollective.com/portals/bafpk5oo/bafpk5oo/MediaKitAssets/c/b9e3a7bb-aca7-48d7-90ed-cff5898aafd0",
+    "logoSrc": "/logos/random/hootsuite.svg"
   },
   {
-    "slug": "blueprint",
-    "title": "Blueprint",
+    "slug": "mpv",
+    "title": "mpv",
     "description": "Simple Icons 随机条目",
-    "href": "https://blueprintjs.com/docs",
-    "logoSrc": "/logos/random/blueprint.svg"
+    "href": "https://github.com/mpv-player/mpv/blob/da400ed3a9b54408d1b5112855a7281380a1ef52/etc/mpv.svg",
+    "logoSrc": "/logos/random/mpv.svg"
   },
   {
-    "slug": "hey",
-    "title": "HEY",
+    "slug": "merck",
+    "title": "Merck",
     "description": "Simple Icons 随机条目",
-    "href": "https://hey.com",
-    "logoSrc": "/logos/random/hey.svg"
+    "href": "https://www.merck.com",
+    "logoSrc": "/logos/random/merck.svg"
+  },
+  {
+    "slug": "adobepremierepro",
+    "title": "Adobe Premiere Pro",
+    "description": "Simple Icons 随机条目",
+    "href": "https://www.adobe.com/creativecloud.html",
+    "logoSrc": "/logos/random/adobepremierepro.svg"
+  },
+  {
+    "slug": "voidlinux",
+    "title": "Void Linux",
+    "description": "Simple Icons 随机条目",
+    "href": "https://alpha.de.repo.voidlinux.org/logos/void-dark2.svg",
+    "logoSrc": "/logos/random/voidlinux.svg"
+  },
+  {
+    "slug": "tinygrad",
+    "title": "tinygrad",
+    "description": "Simple Icons 随机条目",
+    "href": "https://github.com/tinygrad/tinygrad/blob/1025dfb94def0bf3afe7c9ef6af9581727263ab4/docs/logo_tiny_light.svg",
+    "logoSrc": "/logos/random/tinygrad.svg"
+  },
+  {
+    "slug": "htmlacademy",
+    "title": "HTML Academy",
+    "description": "Simple Icons 随机条目",
+    "href": "https://htmlacademy.ru",
+    "logoSrc": "/logos/random/htmlacademy.svg"
+  },
+  {
+    "slug": "couchbase",
+    "title": "Couchbase",
+    "description": "Simple Icons 随机条目",
+    "href": "https://www.couchbase.com",
+    "logoSrc": "/logos/random/couchbase.svg"
+  },
+  {
+    "slug": "workplace",
+    "title": "Workplace",
+    "description": "Simple Icons 随机条目",
+    "href": "https://about.meta.com/brand/resources/workplace/workplace-brand",
+    "logoSrc": "/logos/random/workplace.svg"
+  },
+  {
+    "slug": "microsoftonenote",
+    "title": "Microsoft OneNote",
+    "description": "Simple Icons 随机条目",
+    "href": "https://developer.microsoft.com/en-us/fluentui#/styles/web/colors/products",
+    "logoSrc": "/logos/random/microsoftonenote.svg"
+  },
+  {
+    "slug": "bento",
+    "title": "Bento",
+    "description": "Simple Icons 随机条目",
+    "href": "https://bento.me",
+    "logoSrc": "/logos/random/bento.svg"
+  },
+  {
+    "slug": "apifox",
+    "title": "Apifox",
+    "description": "Simple Icons 随机条目",
+    "href": "https://apifox.com",
+    "logoSrc": "/logos/random/apifox.svg"
+  },
+  {
+    "slug": "informatica",
+    "title": "Informatica",
+    "description": "Simple Icons 随机条目",
+    "href": "https://www.informatica.com",
+    "logoSrc": "/logos/random/informatica.svg"
   }
 ]

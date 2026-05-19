@@ -1,5 +1,5 @@
 /**
- * 从已安装的 simple-icons 包中随机选取 10 个图标：
+ * 从已安装的 simple-icons 包中随机选取 20 个图标：
  * - 复制 SVG 到 public/logos/random/
  * - 写入 lib/random-logos.json 供 /logolink 页面使用
  *
@@ -15,6 +15,7 @@ const projectRoot = path.resolve(__dirname, "..");
 const siRoot = path.join(projectRoot, "node_modules", "simple-icons");
 const outDir = path.join(projectRoot, "public", "logos", "random");
 const manifestPath = path.join(projectRoot, "lib", "random-logos.json");
+const TARGET = 20;
 
 function shuffle(array) {
   const copy = [...array];
@@ -34,9 +35,12 @@ function hrefFor(icon, slug) {
 }
 
 const icons = await getIconsData(siRoot);
-const picked = shuffle(icons).slice(0, 10);
+const picked = shuffle(icons).slice(0, TARGET);
 
 await fs.mkdir(outDir, { recursive: true });
+for (const name of await fs.readdir(outDir)) {
+  if (name.endsWith(".svg")) await fs.unlink(path.join(outDir, name));
+}
 
 const manifest = [];
 for (const icon of picked) {
