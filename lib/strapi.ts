@@ -6,6 +6,17 @@ export function getStrapiURL(): string {
   return process.env.STRAPI_URL ? normalizeBase(process.env.STRAPI_URL) : "";
 }
 
+/** 服务端 REST / 上传用的 API Token（空字符串视为未配置） */
+export function getStrapiApiToken(): string | undefined {
+  let raw = process.env.STRAPI_API_TOKEN?.trim();
+  if (!raw) return undefined;
+  // 兼容误写成 STRAPI_API_TOKEN=xxx 粘贴进值的情况
+  if (raw.startsWith("STRAPI_API_TOKEN=")) {
+    raw = raw.slice("STRAPI_API_TOKEN=".length).trim();
+  }
+  return raw || undefined;
+}
+
 /**
  * 浏览器加载媒体用的 Strapi 根地址（与 {@link getStrapiURL} 可分离）。
  * 若启用 {@link strapiUploadProxyEnabled}，浏览器侧可走同源 `/api/strapi-upload`，可不依赖公网 HTTPS Strapi。
@@ -570,7 +581,7 @@ export async function strapiFetch<T>(
     : `${base}${path.startsWith("/") ? "" : "/"}${path}`;
 
   const headers = new Headers(init?.headers);
-  const token = process.env.STRAPI_API_TOKEN;
+  const token = getStrapiApiToken();
   if (token) {
     headers.set("Authorization", `Bearer ${token}`);
   }
