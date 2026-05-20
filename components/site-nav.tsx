@@ -7,7 +7,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/utils";
 
 function StrapiTopNavInner({ nav }: { nav: GlobalPageTopNav }) {
-  const { logo, links: strapiLinks, cta } = nav;
+  const { logo, links: strapiLinks } = nav;
 
   function hrefIsExternal(href: string, isExternal: boolean) {
     return isExternal || /^https?:\/\//i.test(href);
@@ -74,34 +74,13 @@ function StrapiTopNavInner({ nav }: { nav: GlobalPageTopNav }) {
             ))}
           </ul>
         ) : null}
-        {cta ? (
-          <span className="ml-auto shrink-0">
-            {hrefIsExternal(cta.url, cta.isExternal) ? (
-              <a
-                href={cta.url}
-                className="inline-flex rounded-md bg-primary px-2.5 py-1 text-[11px] font-medium text-primary-foreground hover:opacity-90"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {cta.text}
-              </a>
-            ) : (
-              <Link
-                href={cta.url}
-                className="inline-flex rounded-md bg-primary px-2.5 py-1 text-[11px] font-medium text-primary-foreground hover:opacity-90"
-              >
-                {cta.text}
-              </Link>
-            )}
-          </span>
-        ) : null}
     </>
   );
 }
 
 function hasStrapiTopNavContent(nav: GlobalPageTopNav | null | undefined) {
   if (!nav) return false;
-  return Boolean(nav.logo || nav.links.length > 0 || nav.cta);
+  return Boolean(nav.logo || nav.links.length > 0);
 }
 
 export function SiteNav({
