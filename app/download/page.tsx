@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { ArrowDownToLine, FileArchive, FileText } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { FileArchive, FileText } from "lucide-react";
 import { getStrapiURL } from "@/lib/strapi";
 import { fetchStrapiDownloadsList } from "@/lib/strapi-downloads";
+import { DownloadFileButton } from "./download-file-button";
 
 export const metadata: Metadata = {
   title: "文件下载",
@@ -125,15 +125,11 @@ export default async function DownloadPage() {
                           .join(" · ")}
                       </p>
                     </div>
-                    <Button asChild variant="outline" size="sm" className="shrink-0 gap-1.5">
-                      <a
-                        href={`/api/downloads/${encodeURIComponent(item.fetchKey)}`}
-                        download={item.downloadFileName}
-                      >
-                        <ArrowDownToLine className="size-4" aria-hidden />
-                        下载
-                      </a>
-                    </Button>
+                    <DownloadFileButton
+                      href={`/api/downloads/${encodeURIComponent(item.fetchKey)}`}
+                      fileName={item.downloadFileName}
+                      mime={item.mime}
+                    />
                   </div>
                 </div>
               </li>
