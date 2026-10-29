@@ -1,8 +1,9 @@
-import { contentDispositionAttachment } from "@/lib/download-headers";
 import { getStrapiApiToken, getStrapiURL } from "@/lib/strapi";
+import { proxyAttachmentResponse } from "@/lib/proxy-file-stream";
 import { fetchStrapiUploadFileById } from "@/lib/strapi-wasuupdownloads";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export async function GET(
   _req: Request,
@@ -24,43 +25,12 @@ export async function GET(
       return new Response("Not Found", { status: 404 });
     }
 
-    const headers = new Headers();
-    const token = getStrapiApiToken();
-    if (token) {
-      headers.set("Authorization", `Bearer ${token}`);
-    }
-
-    const upstream = await fetch(resolved.fetchUrl, {
-      headers,
-      cache: "no-store",
+    return await proxyAttachmentResponse({
+      fetchUrl: resolved.fetchUrl,
+      downloadFileName: resolved.downloadFileName,
+      mime: resolved.mime,
+      token: getStrapiApiToken(),
     });
-
-    if (!upstream.ok) {
-      return new Response(null, {
-        status: upstream.status === 404 ? 404 : 502,
-      });
-    }
-
-    const contentType =
-      upstream.headers.get("Content-Type")?.split(";")[0]?.trim() ||
-      resolved.mime;
-
-    const outHeaders = new Headers({
-      "Content-Type": contentType,
-      "Content-Disposition": contentDispositionAttachment(
-        resolved.downloadFileName,
-      ),
-      "Cache-Control": "private, no-store",
-    });
-    const len = upstream.headers.get("Content-Length");
-    if (len) outHeaders.set("Content-Length", len);
-
-    if (upstream.body) {
-      return new Response(upstream.body, { headers: outHeaders });
-    }
-
-    const body = await upstream.arrayBuffer();
-    return new Response(body, { headers: outHeaders });
   } catch {
     return new Response("Internal Server Error", { status: 500 });
   }
